@@ -14,6 +14,7 @@ function App() {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
   }
+  
   //funzione per gestire il submit del form
   const handleFormSubmit = (event) => {
     event.preventDefault(); //evita di aggiorn la pagina all'utente
@@ -21,6 +22,13 @@ function App() {
     setLibri([...libri, { ...formData, id: Date.now() }]);
     //resetta campi del form
     setFormData(initialObj);
+  
+  }
+  const cancella = (index) => {
+    setLibri(libri.filter((currLibro) => currLibro.id !== index ))
+    console.log("sto per cancellare");
+    
+
   }
 
   return (
@@ -55,12 +63,14 @@ function App() {
       </form>
       {libri.map((currLibro, index) => (
         <div key={index}>
+          {/* il bottone al click richiama la funzione delete e gli passa index come parametro */}
+          <button onClick={()=>cancella(currLibro.id)}>
+            Elimina</button>
           <div>{currLibro.titolo}</div>
           <div>{currLibro.scrittore}</div>
         </div>
       ))}
-
-
+      
     </>
   )
 }
